@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController{
 
     @IBOutlet weak var outletSwitch: UISwitch!
     @IBOutlet weak var billAmountTextField: UITextField!
@@ -25,12 +25,11 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var darkModeLabel: UILabel!
     @IBOutlet weak var outputView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-
-    
     @IBAction func darkAction(_ sender: Any) {
         if outletSwitch.isOn == true{
             view.backgroundColor = UIColor(named: "AlmostBlack")
@@ -75,8 +74,18 @@ class ViewController: UIViewController {
         let total = bill + tip
         
         //Update the tip and total labels
-        tipPercentageLabel.text = String(format: "$%.2f",tip)
-        totalLabel.text = String(format: "$%.2f",total)
+        var formatter: NumberFormatter {
+            let format = NumberFormatter()
+            format.numberStyle = .decimal
+            format.numberStyle = .currency
+            format.locale = Locale.current
+            return format
+        }
+        // use formatter for decimal currency and local currency
+        tipPercentageLabel.text = formatter.string(from: tip as NSNumber)!
+        totalLabel.text = formatter.string(from: total as NSNumber)
+//        tipPercentageLabel.text = String(format: "$%.2f",tip)
+//        totalLabel.text = String(format: "$%.2f",total)
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -86,5 +95,7 @@ class ViewController: UIViewController {
         }
 
     }
+    
+
 }
 
